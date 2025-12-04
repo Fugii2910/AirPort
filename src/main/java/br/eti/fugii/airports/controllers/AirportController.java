@@ -1,5 +1,6 @@
 package br.eti.fugii.airports.controllers;
 
+import br.eti.fugii.airports.DTO.AirportMinDTO;
 import br.eti.fugii.airports.entities.Airport;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class AirportController {
     }
 
     @GetMapping("/city/{cityName}")
-    public ResponseEntity <List<Airport>> findByCityIgnoreCase(@PathVariable String cityName) {
+    public ResponseEntity<List<Airport>> findByCityIgnoreCase(@PathVariable String cityName) {
         List<Airport> result = airportService.findByCity(cityName);
 
         if (result.isEmpty()) {
@@ -38,4 +39,16 @@ public class AirportController {
         }
     }
 
+    @GetMapping("/country/{countryName}")
+    public ResponseEntity<List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName) {
+
+        List<AirportMinDTO> result = airportService.findByCountry(countryName);
+
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+
+        } else {
+            return ResponseEntity.ok(result);
+        }
+    }
 }
